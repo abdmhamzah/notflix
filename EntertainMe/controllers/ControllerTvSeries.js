@@ -1,9 +1,13 @@
-const TvSerie = require("../models/tvSerie");
+const axios = require("axios");
+const url = "http://localhost:3002/tvSeries";
 
 class ControllerTvSeries {
   static getTvSeries(req, res) {
-    TvSerie.find()
-      .then((tvSeries) => {
+    axios({
+      url: url,
+      method: "GET",
+    })
+      .then(({ tvSeries }) => {
         res.status(200).json(tvSeries);
       })
       .catch((err) => {
@@ -14,8 +18,11 @@ class ControllerTvSeries {
 
   static getTvSerie(req, res) {
     const { id } = req.params;
-    TvSerie.findById(id)
-      .then((tvSerie) => {
+    axios({
+      url: `${url}/${id}`,
+      method: "GET",
+    })
+      .then(({ tvSerie }) => {
         res.status(200).json(tvSerie);
       })
       .catch((err) => {
@@ -25,15 +32,13 @@ class ControllerTvSeries {
   }
 
   static createTvSerie(req, res) {
-    const { popularity, tags } = req.body;
-    const newTvSerie = {
-      ...req.body,
-      popularity: Number(popularity),
-      tags: tags.split(","),
-    };
-    TvSerie.create(newTvSerie)
-      .then((movie) => {
-        res.status(201).json(movie.ops[0]);
+    axios({
+      url: url,
+      method: "POST",
+      data: req.body,
+    })
+      .then(({ newTvSerie }) => {
+        res.status(201).json(newTvSerie);
       })
       .catch((err) => {
         console.log(err);
@@ -43,14 +48,12 @@ class ControllerTvSeries {
 
   static updateTvSerie(req, res) {
     const { id } = req.params;
-    const { popularity, tags } = req.body;
-    const updatedTvSerieData = {
-      ...req.body,
-      popularity: Number(popularity),
-      tags: tags.split(","),
-    };
-    TvSerie.update(id, updatedTvSerieData)
-      .then((updatedTvSerie) => {
+    axios({
+      url: `${url}/${id}`,
+      method: "PUT",
+      data: req.body,
+    })
+      .then(({ updatedTvSerie }) => {
         res.status(200).json(updatedTvSerie);
       })
       .catch((err) => {
@@ -61,11 +64,15 @@ class ControllerTvSeries {
 
   static deleteTvSerie(req, res) {
     const { id } = req.params;
-    TvSerie.destroy(id)
-      .then((result) => {
+    axios({
+      url: `${url}/${id}`,
+      method: "DELETE",
+    })
+      .then(({ result }) => {
         res.status(200).json(result);
       })
       .catch((err) => {
+        console.log(err);
         res.status(500).json(err);
       });
   }

@@ -26,7 +26,7 @@ class ControllerTvSeries {
 
   static createTvSerie(req, res) {
     const { popularity, tags } = req.body;
-    let newTvSerie = {
+    const newTvSerie = {
       ...req.body,
       popularity: Number(popularity),
       tags: tags.split(","),
@@ -44,12 +44,10 @@ class ControllerTvSeries {
   static updateTvSerie(req, res) {
     const { id } = req.params;
     const { popularity, tags } = req.body;
-    let newPopularity = Number(popularity);
-    let newTags = tags.split(",");
-    let updatedTvSerieData = {
+    const updatedTvSerieData = {
       ...req.body,
-      popularity: newPopularity,
-      tags: newTags,
+      popularity: Number(popularity),
+      tags: tags.split(","),
     };
     TvSerie.update(id, updatedTvSerieData)
       .then((updatedTvSerie) => {

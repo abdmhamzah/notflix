@@ -26,7 +26,7 @@ class ControllerMovie {
 
   static createMovies(req, res) {
     const { popularity, tags } = req.body;
-    let newMovie = {
+    const newMovie = {
       ...req.body,
       popularity: Number(popularity),
       tags: tags.split(","),
@@ -44,12 +44,10 @@ class ControllerMovie {
   static updateMovies(req, res) {
     const { id } = req.params;
     const { popularity, tags } = req.body;
-    let newPopularity = Number(popularity);
-    let newTags = tags.split(",");
-    let updatedMovieData = {
+    const updatedMovieData = {
       ...req.body,
-      popularity: newPopularity,
-      tags: newTags,
+      popularity: Number(popularity),
+      tags: tags.split(","),
     };
     Movie.update(id, updatedMovieData)
       .then((updatedMovie) => {

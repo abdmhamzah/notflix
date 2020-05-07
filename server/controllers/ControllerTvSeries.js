@@ -26,12 +26,10 @@ class ControllerTvSeries {
 
   static createTvSerie(req, res) {
     const { popularity, tags } = req.body;
-    let newPopularity = Number(popularity);
-    let newTags = tags.split(",");
     let newTvSerie = {
       ...req.body,
-      popularity: newPopularity,
-      tags: newTags,
+      popularity: Number(popularity),
+      tags: tags.split(","),
     };
     TvSerie.create(newTvSerie)
       .then((movie) => {

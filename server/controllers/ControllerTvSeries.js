@@ -59,7 +59,7 @@ class ControllerTvSeries {
       });
   }
 
-  static deldeteTvSerie(req, res) {
+  static deleteTvSerie(req, res) {
     const { id } = req.params;
     TvSerie.destroy(id)
       .then((result) => {

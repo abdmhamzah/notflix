@@ -4,7 +4,7 @@ const ControllerTvSeries = require("../controllers/ControllerTvSeries");
 router.get("/", ControllerTvSeries.getTvSeries);
 router.post("/", ControllerTvSeries.createTvSerie);
 router.get("/:id", ControllerTvSeries.getTvSerie);
-router.put("/", ControllerTvSeries.updateTvSerie);
-router.delete("/", ControllerTvSeries.deldeteTvSerie);
+router.put("/:id", ControllerTvSeries.updateTvSerie);
+router.delete("/:id", ControllerTvSeries.deldeteTvSerie);
 
 module.exports = router;

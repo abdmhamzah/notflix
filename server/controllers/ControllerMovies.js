@@ -53,9 +53,14 @@ class ControllerMovie {
       popularity: newPopularity,
       tags: newTags,
     };
-    Movie.update(id, updatedMovieData).then((updatedMovie) => {
-      res.status(200).json(updatedMovie);
-    });
+    Movie.update(id, updatedMovieData)
+      .then((updatedMovie) => {
+        res.status(200).json(updatedMovie);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   }
 
   static deleteMovies(req, res) {

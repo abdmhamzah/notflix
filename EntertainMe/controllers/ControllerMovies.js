@@ -7,9 +7,8 @@ class ControllerMovies {
       url: url,
       method: "GET",
     })
-      .then(({ result }) => {
-        console.log(result, "<<< masuk pakekoo");
-        res.status(200).json(result);
+      .then(({ data }) => {
+        res.status(200).json(data);
       })
       .catch((err) => {
         console.log(err);
@@ -23,8 +22,8 @@ class ControllerMovies {
       url: `${url}/${id}`,
       method: "GET",
     })
-      .then(({ movie }) => {
-        res.status(200).json(movie);
+      .then(({ data }) => {
+        res.status(200).json(data);
       })
       .catch((err) => {
         console.log(err);
@@ -38,8 +37,8 @@ class ControllerMovies {
       method: "POST",
       data: req.body,
     })
-      .then(({ newMovie }) => {
-        res.status(201).json(newMovie);
+      .then(({ data }) => {
+        res.status(201).json(data);
       })
       .catch((err) => {
         console.log(err);
@@ -54,8 +53,8 @@ class ControllerMovies {
       method: "PUT",
       data: req.body,
     })
-      .then(({ updatedMovie }) => {
-        res.status(200).json(updatedMovie);
+      .then(({ data }) => {
+        res.status(200).json(data);
       })
       .catch((err) => {
         console.log(err);
@@ -69,8 +68,8 @@ class ControllerMovies {
       url: `${url}/${id}`,
       method: "DELETE",
     })
-      .then(({ result }) => {
-        res.status(200).json(result);
+      .then(({ data }) => {
+        res.status(200).json(data);
       })
       .catch((err) => {
         console.log(err);

@@ -7,8 +7,8 @@ class ControllerTvSeries {
       url: url,
       method: "GET",
     })
-      .then(({ tvSeries }) => {
-        res.status(200).json(tvSeries);
+      .then(({ data }) => {
+        res.status(200).json(data);
       })
       .catch((err) => {
         console.log(err);
@@ -22,8 +22,8 @@ class ControllerTvSeries {
       url: `${url}/${id}`,
       method: "GET",
     })
-      .then(({ tvSerie }) => {
-        res.status(200).json(tvSerie);
+      .then(({ data }) => {
+        res.status(200).json(data);
       })
       .catch((err) => {
         console.log(err);
@@ -37,8 +37,8 @@ class ControllerTvSeries {
       method: "POST",
       data: req.body,
     })
-      .then(({ newTvSerie }) => {
-        res.status(201).json(newTvSerie);
+      .then(({ data }) => {
+        res.status(201).json(data);
       })
       .catch((err) => {
         console.log(err);
@@ -53,11 +53,11 @@ class ControllerTvSeries {
       method: "PUT",
       data: req.body,
     })
-      .then(({ updatedTvSerie }) => {
-        res.status(200).json(updatedTvSerie);
+      .then(({ data }) => {
+        res.status(200).json(data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         res.status(500).json(err);
       });
   }
@@ -68,8 +68,8 @@ class ControllerTvSeries {
       url: `${url}/${id}`,
       method: "DELETE",
     })
-      .then(({ result }) => {
-        res.status(200).json(result);
+      .then(({ data }) => {
+        res.status(200).json(data);
       })
       .catch((err) => {
         console.log(err);

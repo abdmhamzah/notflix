@@ -1,10 +1,10 @@
 const router = require("express").Router();
 const ControllerTvSeries = require("../controllers/ControllerTvSeries");
 
-router.get("/tvSeries", ControllerTvSeries.getTvSeries);
-router.post("/tvSeries", ControllerTvSeries.createTvSerie);
-router.get("/tvSeries/:id", ControllerTvSeries.getTvSerie);
-router.put("/tvSeries/:id", ControllerTvSeries.updateTvSerie);
-router.delete("/tvSeries/:id", ControllerTvSeries.deleteTvSerie);
+router.get("/tv", ControllerTvSeries.getTvSeries);
+router.post("/tv", ControllerTvSeries.createTvSerie);
+router.get("/tv/:id", ControllerTvSeries.getTvSerie);
+router.put("/tv/:id", ControllerTvSeries.updateTvSerie);
+router.delete("/tv/:id", ControllerTvSeries.deleteTvSerie);
 
 module.exports = router;

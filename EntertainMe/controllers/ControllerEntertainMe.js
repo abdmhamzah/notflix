@@ -9,28 +9,28 @@ class ControllerEntertainMe {
     try {
       const movies = JSON.parse(await redis.get("movies"));
       const tvSeries = JSON.parse(await redis.get("tvSeries"));
-      if (!movies || !tvSeries) {
-        const movieTv = {};
-        if (!movies) {
-          const { data } = await axios({
-            url: urlMovies,
-            method: "GET",
-          });
-          movieTv.movies = data;
-          redis.set("movies", JSON.stringify(data));
-        }
-        if (!tvSeries) {
-          const { data } = await axios({
-            url: urlTvSeries,
-            method: "GET",
-          });
-          movieTv.tvSeries = data;
-          redis.set("tvSeries", JSON.stringify(data));
-        }
-        res.status(200).json(movieTv);
+      const movieTv = {};
+      if (!movies) {
+        const { data } = await axios({
+          url: urlMovies,
+          method: "GET",
+        });
+        movieTv.movies = data;
+        redis.set("movies", JSON.stringify(data));
       } else {
-        res.status(200).json({ movies, tvSeries });
+        movieTv.movies = movies;
       }
+      if (!tvSeries) {
+        const { data } = await axios({
+          url: urlTvSeries,
+          method: "GET",
+        });
+        movieTv.tvSeries = data;
+        redis.set("tvSeries", JSON.stringify(data));
+      } else {
+        movieTv.tvSeries = tvSeries;
+      }
+      res.status(200).json(movieTv);
     } catch (error) {
       res.send(error);
     }

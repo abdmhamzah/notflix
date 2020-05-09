@@ -52,7 +52,7 @@ class ControllerTvSeries {
       const tvSeries = JSON.parse(await redis.get("tvSeries"));
       if (tvSeries) {
         tvSeries.push(data);
-        redis.set("movies", JSON.stringify(tvSeries));
+        redis.set("tvSeries", JSON.stringify(tvSeries));
       }
     } catch (error) {
       res.send(error);
@@ -62,7 +62,7 @@ class ControllerTvSeries {
   static async updateTvSerie(req, res) {
     try {
       const { id } = req.params;
-      const {} = await axios({
+      const { data } = await axios({
         url: `${url}/${id}`,
         method: "PUT",
         data: req.body,
@@ -84,19 +84,19 @@ class ControllerTvSeries {
 
   static async deleteTvSerie(req, res) {
     try {
+      const { id } = req.params;
+      const { data } = await axios({
+        url: `${url}/${id}`,
+        method: "DELETE",
+      });
+      res.status(200).json(data);
+      const tvSeries = JSON.parse(await redis.get("tvSeries"));
+      if (tvSeries) {
+        let undeleted = tvSeries.filter((tvSerie) => tvSerie._id !== id);
+        redis.set("tvSeries", JSON.stringify(undeleted));
+      }
     } catch (error) {
       res.send(error);
-    }
-    const { id } = req.params;
-    const { data } = await axios({
-      url: `${url}/${id}`,
-      method: "DELETE",
-    });
-    res.status(200).json(data);
-    const tvSeries = JSON.parse(await redis.get("tvSeries"));
-    if (tvSeries) {
-      let undeleted = tvSeries.filter((tvSerie) => tvSerie._id !== id);
-      redis.set("tvSeries", JSON.stringify(undeleted));
     }
   }
 }

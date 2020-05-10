@@ -1,9 +1,10 @@
 import React from "react";
+import LoadingGif from "../assets/loading.gif";
 
 export default () => {
   return (
     <>
-      <h1>Loading...</h1>
+      <img src={LoadingGif} alt="Loading Animation" />
     </>
   );
 };

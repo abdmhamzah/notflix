@@ -64,6 +64,7 @@ const resolvers = {
         return movieTv;
       } catch (error) {
         console.log(error);
+        return error;
       }
     },
   },

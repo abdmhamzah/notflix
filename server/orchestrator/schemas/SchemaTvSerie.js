@@ -32,8 +32,8 @@ const typeDefs = gql`
   }
 
   extend type Mutation {
-    addTvSerie(inputData: InputTvSerie): TvSerie
-    updateTvSerie(idTvSerie: ID!, inputData: InputTvSerie): TvSerie
+    addTvSerie(inputData: InputTvSerie!): TvSerie
+    updateTvSerie(idTvSerie: ID!, inputData: InputTvSerie!): TvSerie
     deleteTvSerie(idTvSerie: ID!): DeletedTvMessage
   }
 `;
@@ -55,6 +55,7 @@ const resolvers = {
         }
       } catch (error) {
         console.log(error);
+        return error;
       }
     },
     tvSerie: async (parent, args, contex, info) => {
@@ -73,6 +74,7 @@ const resolvers = {
         }
       } catch (error) {
         console.log(error);
+        return error;
       }
     },
   },
@@ -101,6 +103,7 @@ const resolvers = {
         return data;
       } catch (error) {
         console.log(error);
+        return error;
       }
     },
     updateTvSerie: async (parents, args, contex, info) => {
@@ -131,6 +134,7 @@ const resolvers = {
         return data;
       } catch (error) {
         console.log(error);
+        return error;
       }
     },
     deleteTvSerie: async (parent, args, contex, info) => {
@@ -150,6 +154,7 @@ const resolvers = {
         return data;
       } catch (error) {
         console.log(error);
+        return error;
       }
     },
   },

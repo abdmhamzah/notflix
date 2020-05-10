@@ -32,8 +32,8 @@ const typeDefs = gql`
   }
 
   extend type Mutation {
-    addMovie(inputData: InputMovie): Movie
-    updateMovie(idMovie: ID!, inputData: InputMovie): Movie
+    addMovie(inputData: InputMovie!): Movie
+    updateMovie(idMovie: ID!, inputData: InputMovie!): Movie
     deleteMovie(idMovie: ID!): DeletedMovieMessage
   }
 `;
@@ -55,6 +55,7 @@ const resolvers = {
         }
       } catch (error) {
         console.log(error);
+        return error;
       }
     },
     movie: async (parent, args, contex, info) => {
@@ -73,6 +74,7 @@ const resolvers = {
         }
       } catch (error) {
         console.log(error);
+        return error;
       }
     },
   },
@@ -101,6 +103,7 @@ const resolvers = {
         return data;
       } catch (error) {
         console.log(error);
+        return error;
       }
     },
     updateMovie: async (parent, args, contex, info) => {
@@ -131,6 +134,7 @@ const resolvers = {
         }
       } catch (error) {
         console.log(error);
+        return error;
       }
     },
     deleteMovie: async (parent, args, contex, info) => {
@@ -148,6 +152,7 @@ const resolvers = {
         return data;
       } catch (error) {
         console.log(error);
+        return error;
       }
     },
   },

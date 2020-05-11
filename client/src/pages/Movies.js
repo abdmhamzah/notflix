@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
@@ -19,7 +19,11 @@ const GET_MOVIES = gql`
 
 export default () => {
   const history = useHistory();
-  const { error, loading, data } = useQuery(GET_MOVIES);
+  const { error, loading, data, refetch } = useQuery(GET_MOVIES);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   if (loading) {
     return <Loading />;

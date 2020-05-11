@@ -8,6 +8,7 @@ export default () => {
         <Link to="/entertainme">Home</Link>
         <Link to="/movies">Movies</Link>
         <Link to="/tv">Tv Series</Link>
+        <Link to="/favorites">My Favorites</Link>
       </nav>
     </>
   );

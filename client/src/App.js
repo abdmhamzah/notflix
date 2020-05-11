@@ -11,6 +11,7 @@ import {
   DetailTvSeries,
   AddMovies,
   AddTvSeries,
+  Favorites,
 } from "./pages";
 import { NavigationBar } from "./components";
 
@@ -21,13 +22,14 @@ function App() {
         <Router>
           <NavigationBar />
           <Switch>
-            <Route path="/entertainme" component={Home} />
             <Route path="/movies/:id" component={DetailMovies} />
             <Route path="/tv/:id" component={DetailTvSeries} />
+            <Route path="/entertainme" component={Home} />
             <Route path="/movies" component={Movies} />
             <Route path="/tv" component={TvSeries} />
             <Route path="/addMovies" component={AddMovies} />
             <Route path="/addTvSeries" component={AddTvSeries} />
+            <Route path="/favorites" component={Favorites} />
             <Route exact path="/" component={Home} />
           </Switch>
         </Router>

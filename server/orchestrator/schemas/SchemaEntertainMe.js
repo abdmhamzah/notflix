@@ -30,13 +30,13 @@ const typeDefs = gql`
   }
 
   extend type Query {
-    findAll: Entertainme
+    getAll: Entertainme
   }
 `;
 
 const resolvers = {
   Query: {
-    findAll: async () => {
+    getAll: async () => {
       try {
         const movies = JSON.parse(await redis.get("movies"));
         const tvSeries = JSON.parse(await redis.get("tvSeries"));

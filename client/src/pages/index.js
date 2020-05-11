@@ -5,3 +5,4 @@ export { default as DetailMovies } from "./DetailMovies";
 export { default as DetailTvSeries } from "./DetailTvSeries";
 export { default as AddMovies } from "./AddMovies";
 export { default as AddTvSeries } from "./AddTvSeries";
+export { default as Favorites } from "./Favorites";

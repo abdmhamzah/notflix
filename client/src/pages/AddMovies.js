@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { Loading } from "../components";
+// import { Loading } from "../components";
 
 const ADD_MOVIE = gql`
   mutation addMovie($inputData: InputMovie!) {
@@ -12,18 +12,18 @@ const ADD_MOVIE = gql`
   }
 `;
 
-const GET_MOVIES = gql`
-  {
-    movies {
-      _id
-      title
-      overview
-      poster_path
-      popularity
-      tags
-    }
-  }
-`;
+// const GET_MOVIES = gql`
+//   {
+//     movies {
+//       _id
+//       title
+//       overview
+//       poster_path
+//       popularity
+//       tags
+//     }
+//   }
+// `;
 
 export default () => {
   const history = useHistory();
@@ -33,9 +33,16 @@ export default () => {
   const [popularity, setPopularity] = useState("");
   const [tags, setTags] = useState("");
 
-  const { error, loading, data } = useQuery(GET_MOVIES);
+  // const { error, loading, data } = useQuery(GET_MOVIES);
   const [addMovie] = useMutation(ADD_MOVIE, {
-    refetchQueries: [{ query: GET_MOVIES }],
+    onCompleted: () => {
+      setTitle("");
+      setOverview("");
+      setPosterPath("");
+      setPopularity("");
+      setTags("");
+      history.push("/movies");
+    },
   });
 
   function formAddMovie(e) {
@@ -49,21 +56,15 @@ export default () => {
     };
     console.log(InputMovie);
     addMovie({ variables: { inputData: InputMovie } });
-    setTitle("");
-    setOverview("");
-    setPosterPath("");
-    setPopularity("");
-    setTags("");
-    history.push("/movies");
   }
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
+  // if (error) {
+  //   return <p>Error: {error}</p>;
+  // }
 
   return (
     <>
@@ -123,7 +124,7 @@ export default () => {
         />
         <br />
         <button type="submit">Submit</button>
-        <button onClick={() => history.goBack()}>Back</button>
+        <button onClick={() => history.push("/movies")}>Back</button>
       </form>
     </>
   );

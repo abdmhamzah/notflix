@@ -1,20 +1,7 @@
 import React from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import gql from "graphql-tag";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import { Loading } from "../components";
-
-const GET_MOVIE = gql`
-  query movie($idMovie: ID!) {
-    movie(idMovie: $idMovie) {
-      title
-      overview
-      poster_path
-      popularity
-      tags
-    }
-  }
-`;
+import { useMutation } from "@apollo/react-hooks";
 
 const DELETE_MOVIE = gql`
   mutation deleteMovie($idMovie: ID!) {
@@ -24,44 +11,56 @@ const DELETE_MOVIE = gql`
   }
 `;
 
+const ADD_TO_FAVORITES = gql`
+  mutation addToFavorites($movie: movie) {
+    addToFavorites(movie: $movie) @client {
+      _id
+    }
+  }
+`;
+
 export default () => {
   const history = useHistory();
-  const { id } = useParams();
-  const { error, loading, data } = useQuery(GET_MOVIE, {
-    variables: { idMovie: id },
+  const location = useLocation();
+  const { state: movie } = location;
+
+  const [deleteMovie] = useMutation(DELETE_MOVIE, {
+    onCompleted: () => {
+      history.push("/movies");
+    },
   });
 
-  const [deleteMovie] = useMutation(DELETE_MOVIE);
+  const [addToFavorites] = useMutation(ADD_TO_FAVORITES);
 
   function deleteMovieData() {
-    deleteMovie({ variables: { idMovie: id } });
-    history.push("/movies");
+    deleteMovie({ variables: { idMovie: movie._id } });
   }
 
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
+  function addMovieToFavorites() {
+    addToFavorites({ variables: { movie: movie } });
   }
 
   return (
     <>
       <h1>Detail Movies</h1>
-      {/* {JSON.stringify(id)}
-      {JSON.stringify(data)} */}
       <div>
-        <p>{data.movie.poster_path}</p>
-        <p>{data.movie.title}</p>
-        <p>{data.movie.popularity}</p>
-        <p>{data.movie.overview}</p>
-        {data.movie.tags.map((tag, idx) => (
+        <p>{movie.poster_path}</p>
+        <p>{movie.title}</p>
+        <p>{movie.popularity}</p>
+        <p>{movie.overview}</p>
+        {movie.tags.map((tag, idx) => (
           <div key={idx}>
             <p>{tag}</p>
           </div>
         ))}
-        <button>Edit Movie</button>
+        <button onClick={addMovieToFavorites}>Add to Favorites</button>
+        <button
+          onClick={() =>
+            history.push({ pathname: "/formMovies", state: movie })
+          }
+        >
+          Edit Movie
+        </button>
         <button onClick={deleteMovieData}>Delete Movie</button>
         <button onClick={() => history.goBack()}>Back</button>
       </div>

@@ -9,8 +9,8 @@ import {
   TvSeries,
   DetailMovies,
   DetailTvSeries,
-  AddMovies,
-  AddTvSeries,
+  FormMovies,
+  FormTvSeries,
   Favorites,
 } from "./pages";
 import { NavigationBar } from "./components";
@@ -27,8 +27,8 @@ function App() {
             <Route path="/entertainme" component={Home} />
             <Route path="/movies" component={Movies} />
             <Route path="/tv" component={TvSeries} />
-            <Route path="/addMovies" component={AddMovies} />
-            <Route path="/addTvSeries" component={AddTvSeries} />
+            <Route path="/formMovies" component={FormMovies} />
+            <Route path="/formTvSeries" component={FormTvSeries} />
             <Route path="/favorites" component={Favorites} />
             <Route exact path="/" component={Home} />
           </Switch>

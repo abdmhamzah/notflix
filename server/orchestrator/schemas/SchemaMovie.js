@@ -130,8 +130,8 @@ const resolvers = {
             newMovies.push(movie);
           });
           redis.set("movies", JSON.stringify(newMovies));
-          return data;
         }
+        return data;
       } catch (error) {
         console.log(error);
         return error;

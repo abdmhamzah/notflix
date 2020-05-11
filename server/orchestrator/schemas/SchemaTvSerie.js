@@ -123,6 +123,7 @@ const resolvers = {
           data: input,
         });
         const tvSeries = JSON.parse(await redis.get("tvSeries"));
+        const tvSerie = JSON.parse(await redis.get("tvSerie"));
         if (tvSeries) {
           let newTvSeries = [];
           tvSeries.forEach((tvSerie) => {
@@ -130,6 +131,9 @@ const resolvers = {
             newtvSeries.push(tvSerie);
           });
           redis.set("tvSeries", JSON.stringify(newTvSeries));
+        }
+        if (tvSerie) {
+          redis.set("tvSerie", JSON.stringify(data));
         }
         return data;
       } catch (error) {

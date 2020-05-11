@@ -36,7 +36,7 @@ export default () => {
   return (
     <>
       <h1>Movies Page</h1>
-      <button onClick={() => history.push("/addMovies")}>Add New</button>
+      <button onClick={() => history.push("/formMovies")}>Add New</button>
       {data.movies.map((movie) => (
         <div key={movie._id}>
           <p>{movie.poster_path}</p>
@@ -48,7 +48,14 @@ export default () => {
               <p>{tag}</p>
             </div>
           ))} */}
-          <button onClick={() => history.push(`/movies/${movie._id}`)}>
+          <button
+            onClick={() =>
+              history.push({
+                pathname: `/movies/${movie._id}`,
+                state: movie,
+              })
+            }
+          >
             See Details
           </button>
         </div>

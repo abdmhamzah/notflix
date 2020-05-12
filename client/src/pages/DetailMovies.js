@@ -38,7 +38,6 @@ export default () => {
   const location = useLocation();
   const { state: movie } = location;
   const [added, setAdded] = useState(false);
-  console.log(added);
 
   const [deleteMovie] = useMutation(DELETE_MOVIE, {
     onCompleted: () => {

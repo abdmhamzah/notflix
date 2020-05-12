@@ -68,26 +68,71 @@ export default () => {
 
   function formAddUpdateMovie(e) {
     e.preventDefault();
-    const InputMovie = {
-      title,
-      overview,
-      poster_path,
-      tags,
-      popularity: Number(popularity),
-    };
-    if (state) {
-      const idMovie = state._id;
+    if (title === "" || title === null || title === undefined) {
       Toast.fire({
-        icon: "success",
-        title: "Movie Data Updated Successfully",
+        icon: "error",
+        title: "Title Movie must be Filled",
       });
-      updateMovie({ variables: { idMovie: idMovie, inputData: InputMovie } });
+    } else if (overview === "" || overview === null || overview === undefined) {
+      Toast.fire({
+        icon: "error",
+        title: "Overview Movie must be Filled",
+      });
+    } else if (
+      poster_path === "" ||
+      poster_path === null ||
+      poster_path === undefined
+    ) {
+      Toast.fire({
+        icon: "error",
+        title: "URL Poster Movie must be Filled",
+      });
+    } else if (tags === "" || tags === null || tags === undefined) {
+      Toast.fire({
+        icon: "error",
+        title: "Tags Movie must be Filled",
+      });
+    } else if (
+      popularity === "" ||
+      popularity === null ||
+      popularity === undefined
+    ) {
+      Toast.fire({
+        icon: "error",
+        title: "Popularity Movie must be Filled",
+      });
+    } else if (Number(popularity) < 0 || Number(popularity) > 10) {
+      Toast.fire({
+        icon: "error",
+        title: "Popularity Movie must be between 0 and 10",
+      });
+    } else if (!Number(popularity)) {
+      Toast.fire({
+        icon: "error",
+        title: "Popularity Movie must be a Number",
+      });
     } else {
-      Toast.fire({
-        icon: "success",
-        title: "New Movie Created Successfully",
-      });
-      addMovie({ variables: { inputData: InputMovie } });
+      const InputMovie = {
+        title,
+        overview,
+        poster_path,
+        tags,
+        popularity: Number(popularity),
+      };
+      if (state) {
+        const idMovie = state._id;
+        Toast.fire({
+          icon: "success",
+          title: "Movie Data Updated Successfully",
+        });
+        updateMovie({ variables: { idMovie: idMovie, inputData: InputMovie } });
+      } else {
+        Toast.fire({
+          icon: "success",
+          title: "New Movie Created Successfully",
+        });
+        addMovie({ variables: { inputData: InputMovie } });
+      }
     }
   }
 
@@ -109,7 +154,6 @@ export default () => {
               onChange={(e) => setTitle(e.target.value)}
               type="text"
               placeholder="Enter Movie Title"
-              required
             />
           </Form.Group>
           <Form.Group controlId="formGroupPassword">
@@ -119,7 +163,6 @@ export default () => {
               onChange={(e) => setOverview(e.target.value)}
               type="text"
               placeholder="Ener Movie Overview"
-              required
             />
           </Form.Group>
           <Form.Group controlId="formGroupPassword">
@@ -129,7 +172,6 @@ export default () => {
               onChange={(e) => setPosterPath(e.target.value)}
               type="url"
               placeholder="Enter Poster Image URL"
-              required
             />
           </Form.Group>
           <Form.Group controlId="formGroupPassword">
@@ -138,11 +180,8 @@ export default () => {
               value={popularity}
               onChange={(e) => setPopularity(e.target.value)}
               type="number"
-              min="0"
-              max="10"
               step="any"
               placeholder="Enter Movie Popularity"
-              required
             />
           </Form.Group>
           <Form.Group controlId="formGroupPassword">
@@ -152,7 +191,6 @@ export default () => {
               onChange={(e) => setTags(e.target.value)}
               type="text"
               placeholder="Enter Tags, separated by Comma"
-              required
             />
           </Form.Group>
           {state ? (

@@ -14,7 +14,7 @@ Technology to build this apps:
 - SweetAllert
 - REST API
 
-[Express Documentation](https://documenter.getpostman.com/view/10895551/Szmh3Gv6?version=latest)
+[REST API Documentation](https://documenter.getpostman.com/view/10895551/Szmh3Gv6?version=latest)
 
 Home Page
 

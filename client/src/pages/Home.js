@@ -2,6 +2,8 @@ import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
+import { PosterCarousel } from "../components";
+import { Container, Col, Row, Image } from "react-bootstrap";
 
 const GET_ALL = gql`
   {
@@ -40,41 +42,51 @@ export default () => {
 
   return (
     <>
-      <h1>Home Page</h1>
-      <h3>List Movies</h3>
-      {data.getAll.movies.map((movie) => (
-        <div key={movie._id}>
-          <p>{movie.poster_path}</p>
-          <p>{movie.title}</p>
-          <p>{movie.popularity}</p>
-          {/* <p>{movie.overview}</p>
-          {movie.tags.map((tag) => (
-            <div>
-              <p>{tag}</p>
-            </div>
-          ))} */}
-          <button onClick={() => history.push(`/movies/${movie._id}`)}>
-            See Details
-          </button>
-        </div>
-      ))}
-      <h3>List Tv Series</h3>
-      {data.getAll.tvSeries.map((tv) => (
-        <div key={tv._id}>
-          <p>{tv.poster_path}</p>
-          <p>{tv.title}</p>
-          <p>{tv.popularity}</p>
-          {/* <p>{tv.overview}</p>
-          {tv.tags.map((tag) => (
-            <div>
-              <p>{tag}</p>
-            </div>
-          ))} */}
-          <button onClick={() => history.push(`/tv/${tv._id}`)}>
-            See Details
-          </button>
-        </div>
-      ))}
+      <PosterCarousel />
+      <h3 style={{ marginTop: "20px", marginBottom: "20px" }}>
+        Movies Collections
+      </h3>
+      <Container data-testid="homepage-listcards">
+        <Row>
+          {data.getAll.movies.map((movie) => (
+            <Col key={movie._id} sm={4} md={3} lg={3} className="my-2">
+              <Image
+                src={movie.poster_path}
+                fluid
+                className="card"
+                onClick={() =>
+                  history.push({
+                    pathname: `/movies/${movie._id}`,
+                    state: movie,
+                  })
+                }
+              />
+            </Col>
+          ))}
+        </Row>
+      </Container>
+      <h3 style={{ marginTop: "20px", marginBottom: "20px" }}>
+        TV Series Collections
+      </h3>
+      <Container data-testid="homepage-listcards">
+        <Row>
+          {data.getAll.tvSeries.map((tv) => (
+            <Col key={tv._id} sm={4} md={3} lg={3} className="my-2">
+              <Image
+                src={tv.poster_path}
+                fluid
+                className="card"
+                onClick={() =>
+                  history.push({
+                    pathname: `/tv/${tv._id}`,
+                    state: tv,
+                  })
+                }
+              />
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </>
   );
 };

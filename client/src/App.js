@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { ApolloProvider } from "@apollo/react-hooks";
 import client from "./graphql/graphql";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";

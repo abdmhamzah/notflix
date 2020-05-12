@@ -108,6 +108,7 @@ const resolvers = {
     },
     updateMovie: async (parent, args, contex, info) => {
       try {
+        redis.del("movies");
         const {
           title,
           overview,

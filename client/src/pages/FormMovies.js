@@ -2,6 +2,20 @@ import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
+import { Form, Button } from "react-bootstrap";
+import Swal from "sweetalert2";
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  onOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 
 const ADD_MOVIE = gql`
   mutation addMovie($inputData: InputMovie!) {
@@ -63,72 +77,106 @@ export default () => {
     };
     if (state) {
       const idMovie = state._id;
+      Toast.fire({
+        icon: "success",
+        title: "Movie Data Updated Successfully",
+      });
       updateMovie({ variables: { idMovie: idMovie, inputData: InputMovie } });
     } else {
+      Toast.fire({
+        icon: "success",
+        title: "New Movie Created Successfully",
+      });
       addMovie({ variables: { inputData: InputMovie } });
     }
   }
 
   return (
     <>
-      <h1>Form Add Movies</h1>
-      <form onSubmit={formAddUpdateMovie}>
-        <label>Title</label>
-        <br />
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          type="text"
-          placeholder="Enter Title Here"
-          required
-        />
-        <br />
-        <label>Overview</label>
-        <br />
-        <textarea
-          value={overview}
-          onChange={(e) => setOverview(e.target.value)}
-          type="text"
-          placeholder="Enter Overview Here"
-          required
-        />
-        <br />
-        <label>Poster Image URL</label>
-        <br />
-        <input
-          value={poster_path}
-          onChange={(e) => setPosterPath(e.target.value)}
-          type="url"
-          placeholder="Enter Poster URL Here"
-          required
-        />
-        <br />
-        <label>Popularity</label>
-        <br />
-        <input
-          value={popularity}
-          onChange={(e) => setPopularity(e.target.value)}
-          type="number"
-          min="0"
-          max="10"
-          step="0.5"
-          placeholder="9.0"
-          required
-        />
-        <br />
-        <label>Tags</label>
-        <br />
-        <input
-          value={tags}
-          onChange={(e) => setTags(e.target.value)}
-          type="text"
-          placeholder="Enter Tags Here, separated by comma"
-          required
-        />
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-      <button onClick={() => history.goBack()}>Back</button>
+      <h1 style={{ marginTop: "20px" }}>Form Add Movies</h1>
+      <div
+        style={{ marginTop: "15%" }}
+        className="d-flex justify-content-md-center my-2"
+      >
+        <Form
+          onSubmit={formAddUpdateMovie}
+          style={{ width: "40%", marginTop: "3%" }}
+        >
+          <Form.Group controlId="formGroupEmail">
+            <Form.Label>Title</Form.Label>
+            <Form.Control
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              type="text"
+              placeholder="Enter Movie Title"
+              required
+            />
+          </Form.Group>
+          <Form.Group controlId="formGroupPassword">
+            <Form.Label>Overview</Form.Label>
+            <Form.Control
+              value={overview}
+              onChange={(e) => setOverview(e.target.value)}
+              type="text"
+              placeholder="Ener Movie Overview"
+              required
+            />
+          </Form.Group>
+          <Form.Group controlId="formGroupPassword">
+            <Form.Label>Poster Image URL</Form.Label>
+            <Form.Control
+              value={poster_path}
+              onChange={(e) => setPosterPath(e.target.value)}
+              type="url"
+              placeholder="Enter Poster Image URL"
+              required
+            />
+          </Form.Group>
+          <Form.Group controlId="formGroupPassword">
+            <Form.Label>Popularity</Form.Label>
+            <Form.Control
+              value={popularity}
+              onChange={(e) => setPopularity(e.target.value)}
+              type="number"
+              min="0"
+              max="10"
+              step="any"
+              placeholder="Enter Movie Popularity"
+              required
+            />
+          </Form.Group>
+          <Form.Group controlId="formGroupPassword">
+            <Form.Label>Tags</Form.Label>
+            <Form.Control
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              type="text"
+              placeholder="Enter Tags, separated by Comma"
+              required
+            />
+          </Form.Group>
+          {state ? (
+            <Button
+              type="submit"
+              style={{ marginRight: "1%" }}
+              variant="primary"
+            >
+              Update
+            </Button>
+          ) : (
+            <Button type="submit" style={{ marginRight: "1%" }} variant="info">
+              Submit
+            </Button>
+          )}
+          <Button
+            onClick={() => history.goBack()}
+            style={{ marginLeft: "1%" }}
+            variant="outline-danger"
+          >
+            Cancel
+          </Button>
+        </Form>
+      </div>
     </>
   );
 };

@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 import { Loading } from "../components";
+import { Container, Col, Row, Image, Button } from "react-bootstrap";
 
 const GET_MOVIES = gql`
   {
@@ -35,31 +36,35 @@ export default () => {
 
   return (
     <>
-      <h1>Movies Page</h1>
-      <button onClick={() => history.push("/formMovies")}>Add New</button>
-      {data.movies.map((movie) => (
-        <div key={movie._id}>
-          <p>{movie.poster_path}</p>
-          <p>{movie.title}</p>
-          <p>{movie.popularity}</p>
-          {/* <p>{movie.overview}</p>
-          {movie.tags.map((tag) => (
-            <div>
-              <p>{tag}</p>
-            </div>
-          ))} */}
-          <button
-            onClick={() =>
-              history.push({
-                pathname: `/movies/${movie._id}`,
-                state: movie,
-              })
-            }
-          >
-            See Details
-          </button>
-        </div>
-      ))}
+      <h1 style={{ marginTop: "20px", marginBottom: "20px" }}>
+        Movies Collections
+      </h1>
+      <Button
+        onClick={() => history.push("/formMovies")}
+        style={{ marginBottom: "20px" }}
+        variant="secondary"
+      >
+        Add New
+      </Button>
+      <Container>
+        <Row>
+          {data.movies.map((movie) => (
+            <Col key={movie._id} sm={4} md={3} lg={3} className="my-2">
+              <Image
+                src={movie.poster_path}
+                fluid
+                className="card"
+                onClick={() =>
+                  history.push({
+                    pathname: `/movies/${movie._id}`,
+                    state: movie,
+                  })
+                }
+              />
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </>
   );
 };

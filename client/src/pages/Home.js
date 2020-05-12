@@ -2,7 +2,6 @@ import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
-import { PosterCarousel } from "../components";
 import { Container, Col, Row, Image } from "react-bootstrap";
 
 const GET_ALL = gql`
@@ -42,7 +41,6 @@ export default () => {
 
   return (
     <>
-      <PosterCarousel />
       <h3 style={{ marginTop: "20px", marginBottom: "20px" }}>
         Movies Collections
       </h3>

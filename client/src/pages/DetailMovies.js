@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
@@ -37,6 +37,8 @@ export default () => {
   const history = useHistory();
   const location = useLocation();
   const { state: movie } = location;
+  const [added, setAdded] = useState(false);
+  console.log(added);
 
   const [deleteMovie] = useMutation(DELETE_MOVIE, {
     onCompleted: () => {
@@ -68,6 +70,7 @@ export default () => {
       icon: "success",
       title: "Added to My Favorites successfully",
     });
+    setAdded(true);
     addToFavorites({ variables: { movie: movie } });
   }
 
@@ -107,14 +110,26 @@ export default () => {
                   ))}
                 </div>
                 <div>
-                  <Button
-                    onClick={addMovieToFavorites}
-                    style={{ marginBottom: "10px" }}
-                    variant="warning"
-                    size="sm"
-                  >
-                    <i className="fa fa-heart"></i> Add to Favorites
-                  </Button>
+                  {added ? (
+                    <Button
+                      onClick={addMovieToFavorites}
+                      style={{ marginBottom: "10px" }}
+                      variant="warning"
+                      size="sm"
+                      disabled
+                    >
+                      <i className="fa fa-heart"></i> Add to Favorites
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={addMovieToFavorites}
+                      style={{ marginBottom: "10px" }}
+                      variant="warning"
+                      size="sm"
+                    >
+                      <i className="fa fa-heart"></i> Add to Favorites
+                    </Button>
+                  )}
                 </div>
                 <div style={{ marginTop: "10px" }}>
                   <Button

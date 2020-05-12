@@ -11,11 +11,10 @@ export default () => {
         bg="dark"
         variant="dark"
       >
-        <Navbar.Brand href="#">EntertainMe</Navbar.Brand>
+        <LinkContainer to="/entertainme">
+          <Navbar.Brand href="#">EntertainMe</Navbar.Brand>
+        </LinkContainer>
         <Nav className="mr-auto">
-          <LinkContainer to="/entertainme">
-            <Nav.Link href="#">Home</Nav.Link>
-          </LinkContainer>
           <LinkContainer to="/movies">
             <Nav.Link href="#">Movies</Nav.Link>
           </LinkContainer>
